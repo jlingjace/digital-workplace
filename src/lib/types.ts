@@ -43,6 +43,11 @@ export interface ListResponse<T> {
   pagination: Pagination;
 }
 
+// Tools API returns data-only (no pagination)
+export interface DataResponse<T> {
+  data: T[];
+}
+
 export interface SingleResponse<T> {
   data: T;
 }

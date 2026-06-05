@@ -1,4 +1,4 @@
-import { Announcement, Tool, ListResponse, SingleResponse, Department } from "./types";
+import { Announcement, Tool, ListResponse, DataResponse, SingleResponse, Department } from "./types";
 import { MOCK_ANNOUNCEMENTS, MOCK_TOOLS } from "./mock-data";
 
 const USE_MOCK = process.env.NEXT_PUBLIC_USE_MOCK !== "false";
@@ -78,11 +78,12 @@ export async function getAllAnnouncementsAdmin(): Promise<ListResponse<Announcem
 }
 
 // --- Tools ---
+// GET /api/tools returns { data: [...] } with no pagination field
 
 export async function getTools(params?: {
   q?: string;
   department?: Department;
-}): Promise<ListResponse<Tool>> {
+}): Promise<DataResponse<Tool>> {
   if (USE_MOCK) {
     let items = [...MOCK_TOOLS];
     if (params?.department) {
@@ -96,10 +97,7 @@ export async function getTools(params?: {
           t.ownerName.toLowerCase().includes(q)
       );
     }
-    return {
-      data: items,
-      pagination: { page: 1, limit: 100, total: items.length, totalPages: 1 },
-    };
+    return { data: items };
   }
   const qs = new URLSearchParams();
   if (params?.q) qs.set("q", params.q);
@@ -107,12 +105,10 @@ export async function getTools(params?: {
   return apiFetch(`/api/tools?${qs}`);
 }
 
-export async function getAllToolsAdmin(): Promise<ListResponse<Tool>> {
+// Admin tools list reuses the same public GET /api/tools endpoint (no separate admin GET)
+export async function getAllToolsAdmin(): Promise<DataResponse<Tool>> {
   if (USE_MOCK) {
-    return {
-      data: MOCK_TOOLS,
-      pagination: { page: 1, limit: 100, total: MOCK_TOOLS.length, totalPages: 1 },
-    };
+    return { data: MOCK_TOOLS };
   }
-  return apiFetch("/api/admin/tools");
+  return apiFetch("/api/tools");
 }
