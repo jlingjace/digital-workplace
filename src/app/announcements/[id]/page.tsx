@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ChevronLeft, AlertTriangle, Calendar, Download, User, MessageSquare } from "lucide-react";
+import DOMPurify from "isomorphic-dompurify";
 import { getAnnouncement } from "@/lib/api";
 import { DepartmentBadge } from "@/components/DepartmentBadge";
 import { formatDate, isExpired } from "@/lib/utils";
@@ -67,7 +68,7 @@ export default async function AnnouncementDetailPage({ params }: Props) {
 
         <div
           className="prose prose-neutral max-w-none text-neutral-800 leading-relaxed"
-          dangerouslySetInnerHTML={{ __html: announcement.content }}
+          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(announcement.content) }}
         />
 
         {announcement.attachmentUrl && (
