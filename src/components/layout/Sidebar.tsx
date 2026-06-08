@@ -69,7 +69,7 @@ export function Sidebar() {
                 className={cn(
                   "flex items-center gap-3 py-3 rounded-lg mb-1 text-sm font-medium transition-colors",
                   isActive(item.href)
-                    ? "border-l-4 border-primary pl-4 bg-primary/10 text-primary font-bold"
+                    ? "border-l-4 border-primary pl-4 bg-primary/10 text-primary font-bold rounded-l-none"
                     : "pl-5 text-on-surface-variant hover:bg-surface-container-high"
                 )}
               >

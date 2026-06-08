@@ -62,7 +62,7 @@ export function TopHeader() {
         >
           <Icon name="notifications" className="text-[24px]" />
           <span
-            className="absolute top-1 right-1 w-2 h-2 bg-primary-container rounded-full"
+            className="absolute top-2.5 right-2.5 w-2 h-2 bg-primary-container rounded-full"
             aria-hidden="true"
           />
         </button>
