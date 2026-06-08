@@ -9,7 +9,7 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Logistics Modernism — primary orange
+        // Logistics Modernism — Primary
         "primary": "#a63c00",
         "on-primary": "#ffffff",
         "primary-container": "#ff6000",
@@ -38,7 +38,7 @@ const config: Config = {
         "tertiary-fixed-dim": "#aec6ff",
         "on-tertiary-fixed": "#001a43",
         "on-tertiary-fixed-variant": "#004397",
-        // Background / Surface
+        // Surface & Background
         "background": "#f9f9ff",
         "on-background": "#151c27",
         "surface": "#f9f9ff",
@@ -57,13 +57,17 @@ const config: Config = {
         // Outline
         "outline": "#8f7065",
         "outline-variant": "#e3bfb1",
-        // States
+        // Error
         "error": "#ba1a1a",
         "on-error": "#ffffff",
         "error-container": "#ffdad6",
         "on-error-container": "#93000a",
-        // Utility
+        // Functional
         "success-green": "#10B981",
+        "warning-amber": "#F59E0B",
+        "error-red": "#EF4444",
+        "surface-gray": "#F9FAFB",
+        "border-subtle": "#E5E7EB",
         // Legacy badge colors (kept for dept badges)
         warning: {
           50:  '#fffbeb',
@@ -77,29 +81,40 @@ const config: Config = {
           600: '#16a34a',
         },
       },
-      fontFamily: {
-        sans: ['Hanken Grotesk', 'sans-serif'],
-        mono: ['JetBrains Mono', 'monospace'],
-      },
-      fontSize: {
-        'display': ['3rem', { lineHeight: '1.1', fontWeight: '900' }],
-        'headline': ['2rem', { lineHeight: '1.2', fontWeight: '700' }],
-        'title-lg': ['1.375rem', { lineHeight: '1.3', fontWeight: '700' }],
-        'label-sm': ['0.75rem', { lineHeight: '1.5', fontWeight: '500' }],
+      borderRadius: {
+        sm: '0.25rem',
+        DEFAULT: '0.5rem',
+        md: '0.75rem',
+        lg: '1rem',
+        xl: '1.5rem',
+        full: '9999px',
       },
       spacing: {
-        'xs': '8px',
-        'sm': '16px',
-        'md': '24px',
-        'lg': '40px',
-        'xl': '64px',
+        base: '4px',
+        xs: '8px',
+        sm: '16px',
+        md: '24px',
+        lg: '40px',
+        xl: '64px',
+        gutter: '24px',
+        'margin-mobile': '16px',
+        'margin-desktop': '48px',
         'sidebar': '280px',
       },
-      borderRadius: {
-        DEFAULT: '0.25rem',
-        'lg': '0.5rem',
-        'xl': '0.75rem',
-        '2xl': '1rem',
+      fontFamily: {
+        sans: ['var(--font-sans)', 'Hanken Grotesk', 'sans-serif'],
+        mono: ['var(--font-mono)', 'JetBrains Mono', 'monospace'],
+      },
+      fontSize: {
+        'display': ['48px', { lineHeight: '56px', letterSpacing: '-0.02em', fontWeight: '700' }],
+        'headline-lg': ['32px', { lineHeight: '40px', letterSpacing: '-0.01em', fontWeight: '600' }],
+        'headline-lg-mobile': ['24px', { lineHeight: '32px', fontWeight: '600' }],
+        'headline-md': ['24px', { lineHeight: '32px', fontWeight: '600' }],
+        'body-lg': ['18px', { lineHeight: '28px', fontWeight: '400' }],
+        'body-md': ['16px', { lineHeight: '24px', fontWeight: '400' }],
+        'body-sm': ['14px', { lineHeight: '20px', fontWeight: '400' }],
+        'label-md': ['14px', { lineHeight: '20px', letterSpacing: '0.02em', fontWeight: '500' }],
+        'label-sm': ['12px', { lineHeight: '16px', fontWeight: '500' }],
       },
       maxWidth: {
         'content': '1440px',
