@@ -1,13 +1,10 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import './globals.css'
-import { Navbar } from '@/components/Navbar'
-import { Footer } from '@/components/Footer'
-
-const inter = Inter({ subsets: ['latin'] })
+import { Sidebar } from '@/components/layout/Sidebar'
+import { TopHeader } from '@/components/layout/TopHeader'
 
 export const metadata: Metadata = {
-  title: 'Digital Workplace',
+  title: 'Corporate Portal',
   description: '公司内部信息发布与工具导航平台',
 }
 
@@ -18,10 +15,26 @@ export default function RootLayout({
 }) {
   return (
     <html lang="zh-CN" className="h-full">
-      <body className={`${inter.className} min-h-full flex flex-col bg-neutral-50 antialiased`}>
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
+      {/* eslint-disable @next/next/no-page-custom-font */}
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;900&family=JetBrains+Mono:wght@500&display=swap"
+          rel="stylesheet"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      {/* eslint-enable @next/next/no-page-custom-font */}
+      <body className="bg-background text-on-surface min-h-screen antialiased">
+        <Sidebar />
+        <div className="lg:ml-[280px]">
+          <TopHeader />
+          <main>{children}</main>
+        </div>
       </body>
     </html>
   )

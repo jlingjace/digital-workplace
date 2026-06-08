@@ -12,7 +12,7 @@ export default async function AdminToolsPage() {
         <h1 className="text-xl font-bold text-neutral-900">工具目录管理</h1>
         <Link
           href="/admin/tools/new"
-          className="inline-flex items-center gap-1.5 text-sm font-medium bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors"
+          className="inline-flex items-center gap-1.5 text-sm font-medium bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/80 transition-colors"
         >
           <Plus size={16} />
           新建工具
@@ -47,7 +47,7 @@ export default async function AdminToolsPage() {
                     </td>
                     <td className="px-4 py-3 text-neutral-600">{tool.ownerName}</td>
                     <td className="px-4 py-3 text-neutral-500 truncate max-w-[180px]">
-                      <a href={`mailto:${tool.ownerEmail}`} className="hover:text-primary-600">
+                      <a href={`mailto:${tool.ownerEmail}`} className="hover:text-primary">
                         {tool.ownerEmail}
                       </a>
                     </td>
@@ -55,7 +55,7 @@ export default async function AdminToolsPage() {
                       <div className="flex items-center gap-2">
                         <Link
                           href={`/admin/tools/${tool.id}/edit`}
-                          className="inline-flex items-center gap-1 text-xs text-neutral-600 hover:text-primary-600 px-2 py-1 rounded border border-neutral-200 hover:border-primary-300 transition-colors"
+                          className="inline-flex items-center gap-1 text-xs text-neutral-600 hover:text-primary px-2 py-1 rounded border border-neutral-200 hover:border-primary/30 transition-colors"
                         >
                           <Pencil size={12} />
                           编辑

@@ -19,7 +19,7 @@ export function Navbar() {
   return (
     <nav className="sticky top-0 z-50 h-16 bg-white border-b border-neutral-200 flex items-center px-6">
       <div className="flex items-center gap-2 flex-shrink-0">
-        <div className="w-8 h-8 rounded-md bg-primary-600 flex items-center justify-center text-white font-bold text-sm">
+        <div className="w-8 h-8 rounded-md bg-primary flex items-center justify-center text-white font-bold text-sm">
           DW
         </div>
         <Link href="/" className="font-semibold text-neutral-900 text-sm hidden sm:block">
@@ -36,7 +36,7 @@ export function Navbar() {
             className={cn(
               "text-sm font-medium transition-colors",
               pathname?.startsWith(link.href)
-                ? "text-primary-600"
+                ? "text-primary"
                 : "text-neutral-600 hover:text-neutral-900"
             )}
           >
@@ -47,7 +47,7 @@ export function Navbar() {
 
       <div className="ml-auto flex items-center gap-2">
         {searchOpen ? (
-          <div className="flex items-center border border-neutral-300 rounded-md overflow-hidden focus-within:border-primary-500 focus-within:ring-1 focus-within:ring-primary-500">
+          <div className="flex items-center border border-neutral-300 rounded-md overflow-hidden focus-within:border-primary focus-within:ring-1 focus-within:ring-primary">
             <input
               autoFocus
               type="text"
@@ -85,7 +85,7 @@ export function Navbar() {
               href={link.href}
               className={cn(
                 "text-sm font-medium",
-                pathname?.startsWith(link.href) ? "text-primary-600" : "text-neutral-700"
+                pathname?.startsWith(link.href) ? "text-primary" : "text-neutral-700"
               )}
               onClick={() => setMobileOpen(false)}
             >

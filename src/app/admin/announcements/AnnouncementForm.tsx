@@ -72,8 +72,8 @@ export function AnnouncementForm({ initial = {}, mode }: Props) {
           className={cn(
             "mb-4 px-4 py-3 rounded-lg border text-sm",
             toast.type === "success"
-              ? "bg-success-50 border-success-500 text-success-600"
-              : "bg-error-50 border-error-500 text-error-600"
+              ? "bg-success-green/10 border-success-green text-success-green"
+              : "bg-error-container border-error text-error"
           )}
         >
           {toast.message}
@@ -84,7 +84,7 @@ export function AnnouncementForm({ initial = {}, mode }: Props) {
         {/* Title */}
         <div>
           <label className="block text-sm font-medium text-neutral-700 mb-1.5">
-            标题 <span className="text-error-500">*</span>
+            标题 <span className="text-error">*</span>
           </label>
           <input
             type="text"
@@ -94,18 +94,18 @@ export function AnnouncementForm({ initial = {}, mode }: Props) {
             className={cn(
               "w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-1 transition-colors",
               errors.title
-                ? "border-error-500 focus:ring-error-500"
-                : "border-neutral-300 focus:border-primary-500 focus:ring-primary-500"
+                ? "border-error focus:ring-error"
+                : "border-neutral-300 focus:border-primary focus:ring-primary"
             )}
             placeholder="公告标题"
           />
           <div className="flex justify-between mt-1">
             {errors.title ? (
-              <p className="text-xs text-error-600">{errors.title}</p>
+              <p className="text-xs text-error">{errors.title}</p>
             ) : (
               <span />
             )}
-            <p className={cn("text-xs", title.length > 90 ? "text-error-600" : "text-neutral-400")}>
+            <p className={cn("text-xs", title.length > 90 ? "text-error" : "text-neutral-400")}>
               {title.length}/100
             </p>
           </div>
@@ -114,7 +114,7 @@ export function AnnouncementForm({ initial = {}, mode }: Props) {
         {/* Content */}
         <div>
           <label className="block text-sm font-medium text-neutral-700 mb-1.5">
-            正文 <span className="text-error-500">*</span>
+            正文 <span className="text-error">*</span>
           </label>
           <textarea
             value={content}
@@ -123,24 +123,24 @@ export function AnnouncementForm({ initial = {}, mode }: Props) {
             className={cn(
               "w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-1 transition-colors resize-y",
               errors.content
-                ? "border-error-500 focus:ring-error-500"
-                : "border-neutral-300 focus:border-primary-500 focus:ring-primary-500"
+                ? "border-error focus:ring-error"
+                : "border-neutral-300 focus:border-primary focus:ring-primary"
             )}
             placeholder="输入正文内容（支持 HTML）"
           />
-          {errors.content && <p className="text-xs text-error-600 mt-1">{errors.content}</p>}
+          {errors.content && <p className="text-xs text-error mt-1">{errors.content}</p>}
         </div>
 
         {/* Department + Author */}
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-neutral-700 mb-1.5">
-              发布部门 <span className="text-error-500">*</span>
+              发布部门 <span className="text-error">*</span>
             </label>
             <select
               value={department}
               onChange={(e) => setDepartment(e.target.value as Department)}
-              className="w-full px-3 py-2 border border-neutral-300 rounded-lg text-sm focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500"
+              className="w-full px-3 py-2 border border-neutral-300 rounded-lg text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
             >
               {DEPARTMENTS.map((d) => (
                 <option key={d} value={d}>{DEPT_LABELS[d]}</option>
@@ -149,7 +149,7 @@ export function AnnouncementForm({ initial = {}, mode }: Props) {
           </div>
           <div>
             <label className="block text-sm font-medium text-neutral-700 mb-1.5">
-              发布人 <span className="text-error-500">*</span>
+              发布人 <span className="text-error">*</span>
             </label>
             <input
               type="text"
@@ -158,12 +158,12 @@ export function AnnouncementForm({ initial = {}, mode }: Props) {
               className={cn(
                 "w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-1 transition-colors",
                 errors.authorName
-                  ? "border-error-500 focus:ring-error-500"
-                  : "border-neutral-300 focus:border-primary-500 focus:ring-primary-500"
+                  ? "border-error focus:ring-error"
+                  : "border-neutral-300 focus:border-primary focus:ring-primary"
               )}
               placeholder="发布人姓名"
             />
-            {errors.authorName && <p className="text-xs text-error-600 mt-1">{errors.authorName}</p>}
+            {errors.authorName && <p className="text-xs text-error mt-1">{errors.authorName}</p>}
           </div>
         </div>
 
@@ -175,7 +175,7 @@ export function AnnouncementForm({ initial = {}, mode }: Props) {
               type="text"
               value={authorContact}
               onChange={(e) => setAuthorContact(e.target.value)}
-              className="w-full px-3 py-2 border border-neutral-300 rounded-lg text-sm focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500"
+              className="w-full px-3 py-2 border border-neutral-300 rounded-lg text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
               placeholder="@slack-handle"
             />
           </div>
@@ -185,7 +185,7 @@ export function AnnouncementForm({ initial = {}, mode }: Props) {
               type="date"
               value={expiresAt}
               onChange={(e) => setExpiresAt(e.target.value)}
-              className="w-full px-3 py-2 border border-neutral-300 rounded-lg text-sm focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500"
+              className="w-full px-3 py-2 border border-neutral-300 rounded-lg text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
             />
           </div>
         </div>
@@ -200,7 +200,7 @@ export function AnnouncementForm({ initial = {}, mode }: Props) {
             onClick={() => setIsPinned(!isPinned)}
             className={cn(
               "relative inline-flex h-5 w-9 items-center rounded-full transition-colors",
-              isPinned ? "bg-primary-600" : "bg-neutral-300"
+              isPinned ? "bg-primary" : "bg-neutral-300"
             )}
           >
             <span
@@ -226,7 +226,7 @@ export function AnnouncementForm({ initial = {}, mode }: Props) {
             type="button"
             disabled={isPending}
             onClick={() => handleSave(true)}
-            className="px-4 py-2 text-sm font-medium bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors disabled:opacity-50"
+            className="px-4 py-2 text-sm font-medium bg-primary text-white rounded-lg hover:bg-primary/80 transition-colors disabled:opacity-50"
           >
             {isPending ? "保存中..." : "立即发布"}
           </button>

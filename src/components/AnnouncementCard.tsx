@@ -16,12 +16,12 @@ export function AnnouncementCard({ announcement }: Props) {
       <article
         className={cn(
           "relative bg-white rounded-md border border-neutral-200 p-4 shadow-card hover:shadow-card-hover transition-all duration-200 cursor-pointer",
-          announcement.isPinned && "border-l-4 border-l-primary-500 bg-primary-50",
+          announcement.isPinned && "border-l-4 border-l-primary bg-primary/5",
           expired && "opacity-60"
         )}
       >
         {announcement.isPinned && (
-          <Pin size={14} className="absolute top-3 right-3 text-primary-500" />
+          <Pin size={14} className="absolute top-3 right-3 text-primary" />
         )}
         {expired && (
           <span className="absolute top-3 right-3 text-xs bg-zinc-100 text-zinc-600 px-1.5 py-0.5 rounded">

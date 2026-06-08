@@ -39,7 +39,7 @@ export function ToolsClient({ initialData }: Props) {
           placeholder="搜索工具或 Owner..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full pl-10 pr-4 py-2.5 border border-neutral-300 rounded-lg text-sm focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500 bg-white"
+          className="w-full pl-10 pr-4 py-2.5 border border-neutral-300 rounded-lg text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary bg-white"
         />
       </div>
 
@@ -50,7 +50,7 @@ export function ToolsClient({ initialData }: Props) {
           <p className="text-sm text-neutral-500">
             找不到 &ldquo;{search}&rdquo;？可能还未录入。
             <br />
-            请联系 IT 团队添加：<a href="mailto:it@company.com" className="text-primary-600">it@company.com</a>
+            请联系 IT 团队添加：<a href="mailto:it@company.com" className="text-primary">it@company.com</a>
           </p>
         </div>
       ) : (

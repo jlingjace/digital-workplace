@@ -19,7 +19,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         {/* Sidebar */}
         <aside className="hidden md:flex flex-col w-56 flex-shrink-0">
           <div className="flex items-center gap-2 mb-4 px-3">
-            <LayoutDashboard size={16} className="text-primary-600" />
+            <LayoutDashboard size={16} className="text-primary" />
             <span className="text-sm font-semibold text-neutral-700">后台管理</span>
           </div>
           <nav className="space-y-1">
@@ -30,7 +30,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 className={cn(
                   "flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-colors",
                   pathname?.startsWith(href)
-                    ? "bg-primary-50 text-primary-700"
+                    ? "bg-primary/5 text-primary/80"
                     : "text-neutral-600 hover:bg-neutral-100 hover:text-neutral-900"
                 )}
               >

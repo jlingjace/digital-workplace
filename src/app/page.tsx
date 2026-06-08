@@ -18,7 +18,7 @@ export default async function HomePage() {
           <input
             type="text"
             placeholder="搜索公告、工具或 Owner..."
-            className="w-full h-12 pl-10 pr-4 border border-neutral-300 rounded-lg text-sm focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500 bg-white"
+            className="w-full h-12 pl-10 pr-4 border border-neutral-300 rounded-lg text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary bg-white"
           />
           <span className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400">
             🔍
@@ -35,7 +35,7 @@ export default async function HomePage() {
           <h2 className="text-lg font-semibold text-neutral-900">最新公告</h2>
           <Link
             href="/announcements"
-            className="text-sm text-primary-600 hover:text-primary-700 flex items-center gap-1"
+            className="text-sm text-primary hover:text-primary/80 flex items-center gap-1"
           >
             查看全部 <ChevronRight size={14} />
           </Link>
@@ -53,7 +53,7 @@ export default async function HomePage() {
         <div className="flex flex-col sm:flex-row gap-4">
           <Link
             href="/announcements"
-            className="flex-1 border border-neutral-200 rounded-lg p-4 text-center hover:bg-primary-50 hover:border-primary-200 transition-colors bg-white"
+            className="flex-1 border border-neutral-200 rounded-lg p-4 text-center hover:bg-primary/5 hover:border-primary/20 transition-colors bg-white"
           >
             <div className="text-2xl mb-1">📋</div>
             <div className="font-medium text-neutral-800 text-sm">查看所有公告</div>
@@ -61,7 +61,7 @@ export default async function HomePage() {
           </Link>
           <Link
             href="/tools"
-            className="flex-1 border border-neutral-200 rounded-lg p-4 text-center hover:bg-primary-50 hover:border-primary-200 transition-colors bg-white"
+            className="flex-1 border border-neutral-200 rounded-lg p-4 text-center hover:bg-primary/5 hover:border-primary/20 transition-colors bg-white"
           >
             <div className="text-2xl mb-1">🔧</div>
             <div className="font-medium text-neutral-800 text-sm">工具 & Owner 目录</div>
