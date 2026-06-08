@@ -6,11 +6,12 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Icon } from "@/components/ui/Icon";
 
+// TODO: implement these pages before removing pointer-events-none
 const quickLinks = [
-  { href: "/directory", label: "Directory" },
-  { href: "/benefits", label: "Benefits" },
-  { href: "/policies", label: "Policies" },
-  { href: "/support", label: "IT Support" },
+  { href: "/directory", label: "Directory", stub: true },
+  { href: "/benefits", label: "Benefits", stub: true },
+  { href: "/policies", label: "Policies", stub: true },
+  { href: "/support", label: "IT Support", stub: true },
 ];
 
 export function TopHeader() {
@@ -43,10 +44,13 @@ export function TopHeader() {
             href={link.href}
             className={cn(
               "text-sm font-medium transition-colors whitespace-nowrap",
-              pathname?.startsWith(link.href)
+              link.stub && "pointer-events-none opacity-50",
+              !link.stub && pathname?.startsWith(link.href)
                 ? "text-primary font-bold border-b-2 border-primary pb-1"
                 : "text-on-surface-variant hover:text-on-surface"
             )}
+            aria-disabled={link.stub}
+            tabIndex={link.stub ? -1 : undefined}
           >
             {link.label}
           </Link>

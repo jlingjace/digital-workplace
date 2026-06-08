@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { Pin, Calendar } from "lucide-react";
+import { Calendar } from "lucide-react";
 import { Announcement } from "@/lib/types";
 import { DepartmentBadge } from "./DepartmentBadge";
+import { Icon } from "@/components/ui/Icon";
 import { cn, formatDate, isExpired } from "@/lib/utils";
 
 interface Props {
@@ -21,7 +22,7 @@ export function AnnouncementCard({ announcement }: Props) {
         )}
       >
         {announcement.isPinned && (
-          <Pin size={14} className="absolute top-3 right-3 text-primary" />
+          <Icon name="push_pin" className="absolute top-3 right-3 text-primary text-[14px]" />
         )}
         {expired && (
           <span className="absolute top-3 right-3 text-xs bg-zinc-100 text-zinc-600 px-1.5 py-0.5 rounded">

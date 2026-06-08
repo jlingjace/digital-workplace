@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { getAnnouncements } from "@/lib/api";
 import { AnnouncementCard } from "@/components/AnnouncementCard";
+import { Icon } from "@/components/ui/Icon";
 
 export default async function HomePage() {
   const { data: announcements } = await getAnnouncements({ limit: 5 });
@@ -20,9 +21,7 @@ export default async function HomePage() {
             placeholder="搜索公告、工具或 Owner..."
             className="w-full h-12 pl-10 pr-4 border border-neutral-300 rounded-lg text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary bg-white"
           />
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400">
-            🔍
-          </span>
+          <Icon name="search" className="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]" />
         </div>
         <p className="text-xs text-neutral-400 mt-2">
           支持公告标题、工具名称、Owner 姓名搜索

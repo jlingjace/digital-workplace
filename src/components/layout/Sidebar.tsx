@@ -67,7 +67,7 @@ export function Sidebar() {
                 href={item.href}
                 onClick={() => setMobileOpen(false)}
                 className={cn(
-                  "flex items-center gap-3 py-3 rounded-lg mb-1 text-sm font-medium transition-colors",
+                  "flex items-center gap-3 py-3 rounded-lg mb-1 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1",
                   isActive(item.href)
                     ? "border-l-4 border-primary pl-4 bg-primary/10 text-primary font-bold rounded-l-none"
                     : "pl-5 text-on-surface-variant hover:bg-surface-container-high"
@@ -87,20 +87,16 @@ export function Sidebar() {
             Submit Request
           </button>
           <div className="flex flex-col gap-1">
-            <Link
-              href="/settings"
-              className="flex items-center gap-3 py-2 pl-3 text-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors"
-            >
+            {/* TODO: implement /settings page */}
+            <span className="flex items-center gap-3 py-2 pl-3 text-sm text-on-surface-variant rounded-lg pointer-events-none opacity-50">
               <Icon name="settings" className="text-[18px]" />
               Settings
-            </Link>
-            <Link
-              href="/support"
-              className="flex items-center gap-3 py-2 pl-3 text-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors"
-            >
+            </span>
+            {/* TODO: implement /support page */}
+            <span className="flex items-center gap-3 py-2 pl-3 text-sm text-on-surface-variant rounded-lg pointer-events-none opacity-50">
               <Icon name="help" className="text-[18px]" />
               Support
-            </Link>
+            </span>
           </div>
         </div>
       </aside>

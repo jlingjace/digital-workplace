@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import { Sidebar } from '@/components/layout/Sidebar'
-import { TopHeader } from '@/components/layout/TopHeader'
+import { PortalShell } from '@/components/layout/PortalShell'
 
 export const metadata: Metadata = {
   title: 'Corporate Portal',
@@ -30,11 +29,7 @@ export default function RootLayout({
       </head>
       {/* eslint-enable @next/next/no-page-custom-font */}
       <body className="bg-background text-on-surface min-h-screen antialiased">
-        <Sidebar />
-        <div className="lg:ml-[280px]">
-          <TopHeader />
-          <main>{children}</main>
-        </div>
+        <PortalShell>{children}</PortalShell>
       </body>
     </html>
   )
