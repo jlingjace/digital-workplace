@@ -64,6 +64,7 @@ const config: Config = {
         "on-error-container": "#93000a",
         // Utility
         "success-green": "#10B981",
+        "warning-amber": "#F59E0B",
         // Legacy badge colors (kept for dept badges)
         warning: {
           50:  '#fffbeb',
