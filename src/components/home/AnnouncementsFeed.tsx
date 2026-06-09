@@ -1,5 +1,4 @@
 import Link from "next/link";
-import DOMPurify from "isomorphic-dompurify";
 import { Announcement } from "@/lib/types";
 import { DepartmentBadge } from "@/components/DepartmentBadge";
 import { cn, formatDate } from "@/lib/utils";
@@ -7,6 +6,12 @@ import { Icon } from "@/components/ui/Icon";
 
 interface Props {
   announcements: Announcement[];
+}
+
+// Strip HTML tags to extract plain text for preview snippets.
+// { ALLOWED_TAGS: [] } semantics: no tags, text content only.
+function stripHtml(html: string): string {
+  return html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
 }
 
 function getBorderClass(department: Announcement["department"]): string {
@@ -57,7 +62,7 @@ export function AnnouncementsFeed({ announcements }: Props) {
                 {ann.title}
               </h3>
               <p className="text-[13px] text-on-surface-variant line-clamp-2 leading-relaxed">
-                {DOMPurify.sanitize(ann.content, { ALLOWED_TAGS: [] })}
+                {stripHtml(ann.content)}
               </p>
             </article>
           </Link>
