@@ -1,9 +1,10 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ChevronLeft, AlertTriangle, Calendar, Download, User, MessageSquare } from "lucide-react";
+import { Download, User, MessageSquare } from "lucide-react";
 import DOMPurify from "isomorphic-dompurify";
 import { getAnnouncement } from "@/lib/api";
 import { DepartmentBadge } from "@/components/DepartmentBadge";
+import { Icon } from "@/components/ui/Icon";
 import { formatDate, isExpired } from "@/lib/utils";
 
 interface Props {
@@ -23,57 +24,63 @@ export default async function AnnouncementDetailPage({ params }: Props) {
 
   return (
     <div className="max-w-[1200px] mx-auto px-6 lg:px-10 py-8">
-      <Link
-        href="/announcements"
-        className="inline-flex items-center gap-1 text-sm text-neutral-500 hover:text-neutral-700 mb-6"
-      >
-        <ChevronLeft size={16} />
-        返回公告列表
-      </Link>
+      {/* Breadcrumb */}
+      <nav className="flex items-center gap-2 text-[14px] text-on-surface-variant mb-4" aria-label="Breadcrumb">
+        <Link href="/announcements" className="hover:text-primary transition-colors">
+          Announcements
+        </Link>
+        <Icon name="chevron_right" className="text-[16px]" />
+        <span className="text-on-surface line-clamp-1">{announcement.title}</span>
+      </nav>
 
+      {/* Expired banner */}
       {expired && (
-        <div className="flex items-center gap-2 w-full bg-warning-50 border border-warning-500 text-warning-600 rounded-lg px-4 py-3 mb-6 text-sm">
-          <AlertTriangle size={16} className="flex-shrink-0" />
-          <span>
+        <div className="bg-warning-amber/10 border border-warning-amber text-warning-amber rounded-xl p-4 flex items-center gap-3 mb-6">
+          <Icon name="warning" className="text-[20px] shrink-0" />
+          <span className="text-[14px] font-medium">
             此公告已于 {formatDate(announcement.expiresAt!)} 过期，内容仅供历史参考
           </span>
         </div>
       )}
 
-      <article className="max-w-3xl mx-auto bg-white rounded-lg border border-neutral-200 p-8 shadow-card">
-        <div className="mb-4 flex items-center gap-2">
-          <DepartmentBadge department={announcement.department} />
-        </div>
-
-        <h1 className="text-3xl font-bold text-neutral-900 mb-4">
-          {announcement.title}
-        </h1>
-
-        <div className="border-y border-neutral-100 py-3 mb-6 flex flex-wrap gap-4 text-sm text-neutral-500">
-          <span className="flex items-center gap-1.5">
+      <article className="max-w-3xl mx-auto bg-surface-container-lowest rounded-lg border border-outline-variant p-8 shadow-card">
+        {/* Meta row */}
+        <div className="flex items-center gap-4 flex-wrap mb-6">
+          <DepartmentBadge
+            department={announcement.department}
+            className="px-3 py-1 text-[10px] font-mono uppercase tracking-wider"
+          />
+          <span className="text-[14px] text-on-surface-variant flex items-center gap-1.5">
             <User size={14} />
             {announcement.authorName}
           </span>
-          <span className="flex items-center gap-1.5">
-            <Calendar size={14} />
+          <span className="text-[14px] text-on-surface-variant">
             {formatDate(announcement.publishedAt)}
           </span>
           {announcement.expiresAt && (
-            <span className="flex items-center gap-1.5">
-              <Calendar size={14} />
+            <span className="text-[14px] text-on-surface-variant">
               有效至：{formatDate(announcement.expiresAt)}
+            </span>
+          )}
+          {expired && (
+            <span className="bg-error-container text-on-error-container px-3 py-1 rounded-full text-[10px] font-mono">
+              Expired
             </span>
           )}
         </div>
 
+        <h1 className="text-[32px] font-bold text-on-surface mb-6 leading-[1.2]">
+          {announcement.title}
+        </h1>
+
         <div
-          className="prose prose-neutral max-w-none text-neutral-800 leading-relaxed"
+          className="prose prose-neutral max-w-none text-on-surface leading-relaxed"
           dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(announcement.content) }}
         />
 
         {announcement.attachmentUrl && (
-          <div className="mt-6 border-t border-neutral-100 pt-4">
-            <p className="text-sm font-medium text-neutral-700 mb-2">📎 附件</p>
+          <div className="mt-6 border-t border-outline-variant pt-4">
+            <p className="text-sm font-medium text-on-surface mb-2">附件</p>
             <a
               href={announcement.attachmentUrl}
               className="inline-flex items-center gap-1.5 text-sm text-primary hover:text-primary/80"
@@ -86,9 +93,9 @@ export default async function AnnouncementDetailPage({ params }: Props) {
         )}
 
         {announcement.authorContact && (
-          <div className="mt-6 border-t border-neutral-100 pt-4">
-            <p className="text-sm font-medium text-neutral-700 mb-2">联系人</p>
-            <div className="flex items-center gap-3 text-sm text-neutral-600">
+          <div className="mt-6 border-t border-outline-variant pt-4">
+            <p className="text-sm font-medium text-on-surface mb-2">联系人</p>
+            <div className="flex items-center gap-3 text-sm text-on-surface-variant">
               <span className="flex items-center gap-1.5">
                 <User size={14} />
                 {announcement.authorName}
