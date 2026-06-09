@@ -77,7 +77,9 @@ export async function POST(request: NextRequest) {
     publishedAt,
     expiresAt,
     isPinned,
+    isMandatory,
     attachmentUrl,
+    slackChannelId,
     status,
   } = body as Record<string, unknown>
 
@@ -117,7 +119,9 @@ export async function POST(request: NextRequest) {
       ...(parsedPublishedAt !== undefined ? { publishedAt: parsedPublishedAt } : {}),
       expiresAt: parsedExpiresAt ?? null,
       isPinned: typeof isPinned === 'boolean' ? isPinned : false,
+      isMandatory: typeof isMandatory === 'boolean' ? isMandatory : false,
       attachmentUrl: typeof attachmentUrl === 'string' ? attachmentUrl.trim() || null : null,
+      slackChannelId: typeof slackChannelId === 'string' ? slackChannelId.trim() || null : null,
       status: (status as AnnouncementStatus) ?? AnnouncementStatus.DRAFT,
     },
   })
