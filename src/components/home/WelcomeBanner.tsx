@@ -11,7 +11,7 @@ export function WelcomeBanner({
 }: WelcomeBannerProps) {
   return (
     <section
-      className="bg-primary text-on-primary rounded-xl p-10 flex flex-col lg:flex-row items-start lg:items-center justify-between relative overflow-hidden gap-8"
+      className="bg-gradient-to-br from-primary-container to-primary text-on-primary rounded-xl p-10 flex flex-col lg:flex-row items-start lg:items-center justify-between relative overflow-hidden gap-8"
       aria-label="Welcome banner"
     >
       <div className="relative z-10">
