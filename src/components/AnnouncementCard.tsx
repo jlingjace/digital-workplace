@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Calendar } from "lucide-react";
 import { Announcement } from "@/lib/types";
 import { DepartmentBadge } from "./DepartmentBadge";
 import { Icon } from "@/components/ui/Icon";
@@ -12,12 +11,18 @@ interface Props {
 export function AnnouncementCard({ announcement }: Props) {
   const expired = isExpired(announcement.expiresAt);
 
+  const borderClass = announcement.isPinned
+    ? "border-l-4 border-l-primary bg-primary/5"
+    : announcement.department === "IT"
+    ? "border-l-4 border-l-tertiary"
+    : "border-l-4 border-l-outline-variant";
+
   return (
     <Link href={`/announcements/${announcement.id}`}>
       <article
         className={cn(
-          "relative bg-white rounded-md border border-neutral-200 p-4 shadow-card hover:shadow-card-hover transition-all duration-200 cursor-pointer",
-          announcement.isPinned && "border-l-4 border-l-primary bg-primary/5",
+          "relative bg-surface-container-lowest rounded-lg border border-outline-variant p-5 hover:bg-surface-container transition-colors cursor-pointer group",
+          borderClass,
           expired && "opacity-60"
         )}
       >
@@ -32,14 +37,14 @@ export function AnnouncementCard({ announcement }: Props) {
         <div className="flex items-start gap-2 mb-2">
           <DepartmentBadge department={announcement.department} />
         </div>
-        <h3 className="font-semibold text-neutral-900 text-sm line-clamp-2 mb-2">
+        <h3 className="font-semibold text-on-surface text-sm line-clamp-2 mb-2 group-hover:text-primary transition-colors">
           {announcement.title}
         </h3>
-        <div className="flex items-center gap-2 text-xs text-neutral-500">
+        <div className="flex items-center gap-2 text-xs text-on-surface-variant">
           <span>{announcement.authorName}</span>
           <span>·</span>
           <span className="flex items-center gap-1">
-            <Calendar size={11} />
+            <Icon name="calendar_today" className="text-[11px]" />
             {formatDate(announcement.publishedAt)}
           </span>
           {announcement.expiresAt && !expired && (

@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ChevronLeft, AlertTriangle, Calendar, Download, User, MessageSquare } from "lucide-react";
+import { Icon } from "@/components/ui/Icon";
 import { getAnnouncement } from "@/lib/api";
 import { DepartmentBadge } from "@/components/DepartmentBadge";
 import { SafeHtmlContent } from "@/components/SafeHtmlContent";
@@ -25,42 +25,42 @@ export default async function AnnouncementDetailPage({ params }: Props) {
     <div className="max-w-[1200px] mx-auto px-6 lg:px-10 py-8">
       <Link
         href="/announcements"
-        className="inline-flex items-center gap-1 text-sm text-neutral-500 hover:text-neutral-700 mb-6"
+        className="inline-flex items-center gap-1 text-sm text-on-surface-variant hover:text-on-surface mb-6"
       >
-        <ChevronLeft size={16} />
+        <Icon name="chevron_left" className="text-[18px]" />
         返回公告列表
       </Link>
 
       {expired && (
-        <div className="flex items-center gap-2 w-full bg-warning-50 border border-warning-500 text-warning-600 rounded-lg px-4 py-3 mb-6 text-sm">
-          <AlertTriangle size={16} className="flex-shrink-0" />
+        <div className="flex items-center gap-2 w-full bg-warning-amber/10 border border-warning-amber text-warning-amber rounded-xl px-4 py-3 mb-6 text-sm">
+          <Icon name="warning" className="flex-shrink-0 text-[16px]" />
           <span>
             此公告已于 {formatDate(announcement.expiresAt!)} 过期，内容仅供历史参考
           </span>
         </div>
       )}
 
-      <article className="max-w-3xl mx-auto bg-white rounded-lg border border-neutral-200 p-8 shadow-card">
+      <article className="max-w-3xl mx-auto bg-surface-container-lowest rounded-lg border border-outline-variant p-8">
         <div className="mb-4 flex items-center gap-2">
           <DepartmentBadge department={announcement.department} />
         </div>
 
-        <h1 className="text-3xl font-bold text-neutral-900 mb-4">
+        <h1 className="text-3xl font-bold text-on-surface mb-4">
           {announcement.title}
         </h1>
 
-        <div className="border-y border-neutral-100 py-3 mb-6 flex flex-wrap gap-4 text-sm text-neutral-500">
+        <div className="border-y border-outline-variant py-3 mb-6 flex flex-wrap gap-4 text-sm text-on-surface-variant">
           <span className="flex items-center gap-1.5">
-            <User size={14} />
+            <Icon name="person" className="text-[14px]" />
             {announcement.authorName}
           </span>
           <span className="flex items-center gap-1.5">
-            <Calendar size={14} />
+            <Icon name="calendar_today" className="text-[14px]" />
             {formatDate(announcement.publishedAt)}
           </span>
           {announcement.expiresAt && (
             <span className="flex items-center gap-1.5">
-              <Calendar size={14} />
+              <Icon name="calendar_today" className="text-[14px]" />
               有效至：{formatDate(announcement.expiresAt)}
             </span>
           )}
@@ -68,33 +68,36 @@ export default async function AnnouncementDetailPage({ params }: Props) {
 
         <SafeHtmlContent
           html={announcement.content}
-          className="prose prose-neutral max-w-none text-neutral-800 leading-relaxed"
+          className="prose prose-neutral max-w-none text-on-surface leading-relaxed"
         />
 
         {announcement.attachmentUrl && (
-          <div className="mt-6 border-t border-neutral-100 pt-4">
-            <p className="text-sm font-medium text-neutral-700 mb-2">📎 附件</p>
+          <div className="mt-6 border-t border-outline-variant pt-4">
+            <p className="text-sm font-medium text-on-surface mb-2">
+              <Icon name="attach_file" className="inline text-[14px] mr-1" />
+              附件
+            </p>
             <a
               href={announcement.attachmentUrl}
               className="inline-flex items-center gap-1.5 text-sm text-primary hover:text-primary/80"
               download
             >
-              <Download size={14} />
+              <Icon name="download" className="text-[14px]" />
               下载附件
             </a>
           </div>
         )}
 
         {announcement.authorContact && (
-          <div className="mt-6 border-t border-neutral-100 pt-4">
-            <p className="text-sm font-medium text-neutral-700 mb-2">联系人</p>
-            <div className="flex items-center gap-3 text-sm text-neutral-600">
+          <div className="mt-6 border-t border-outline-variant pt-4">
+            <p className="text-sm font-medium text-on-surface mb-2">联系人</p>
+            <div className="flex items-center gap-3 text-sm text-on-surface-variant">
               <span className="flex items-center gap-1.5">
-                <User size={14} />
+                <Icon name="person" className="text-[14px]" />
                 {announcement.authorName}
               </span>
               <span className="flex items-center gap-1.5">
-                <MessageSquare size={14} />
+                <Icon name="chat" className="text-[14px]" />
                 {announcement.authorContact}
               </span>
             </div>

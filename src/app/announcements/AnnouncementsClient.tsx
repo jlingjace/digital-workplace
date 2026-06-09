@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { Search } from "lucide-react";
+import { Icon } from "@/components/ui/Icon";
 import { Announcement, Department } from "@/lib/types";
 import { AnnouncementCard } from "@/components/AnnouncementCard";
 import { AnnouncementSkeletonCard } from "@/components/SkeletonCard";
@@ -29,13 +29,13 @@ export function AnnouncementsClient({ initialData, total }: Props) {
       {/* Search + Filter */}
       <div className="mb-6 space-y-3">
         <div className="relative">
-          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400" />
+          <Icon name="search" className="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]" />
           <input
             type="text"
             placeholder="搜索公告标题..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 border border-neutral-300 rounded-lg text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary bg-white"
+            className="w-full pl-10 pr-4 py-2.5 border border-outline-variant rounded-lg text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary bg-surface-container-lowest"
           />
         </div>
         <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
@@ -44,8 +44,8 @@ export function AnnouncementsClient({ initialData, total }: Props) {
             className={cn(
               "flex-shrink-0 text-xs font-medium px-3 py-1.5 rounded-full border transition-colors",
               !activeDept
-                ? "bg-primary/10 text-primary/80 border-primary/30"
-                : "bg-white text-neutral-600 border-neutral-200 hover:bg-neutral-50"
+                ? "bg-primary text-on-primary border-transparent"
+                : "bg-surface-container-low text-on-surface-variant border-outline-variant hover:bg-surface-container"
             )}
           >
             全部
@@ -57,8 +57,8 @@ export function AnnouncementsClient({ initialData, total }: Props) {
               className={cn(
                 "flex-shrink-0 text-xs font-medium px-3 py-1.5 rounded-full border transition-colors",
                 activeDept === dept
-                  ? "bg-primary/10 text-primary/80 border-primary/30"
-                  : "bg-white text-neutral-600 border-neutral-200 hover:bg-neutral-50"
+                  ? "bg-primary text-on-primary border-transparent"
+                  : "bg-surface-container-low text-on-surface-variant border-outline-variant hover:bg-surface-container"
               )}
             >
               {DEPT_LABELS[dept]}
@@ -67,7 +67,7 @@ export function AnnouncementsClient({ initialData, total }: Props) {
         </div>
       </div>
 
-      <p className="text-sm text-neutral-500 mb-4">
+      <p className="text-sm text-on-surface-variant mb-4">
         共 {filtered.length} 条公告{activeDept ? ` · 当前筛选：${DEPT_LABELS[activeDept]}` : " · 当前筛选：全部"}
       </p>
 
@@ -79,14 +79,14 @@ export function AnnouncementsClient({ initialData, total }: Props) {
         </div>
       ) : filtered.length === 0 ? (
         <div className="flex flex-col items-center py-16 text-center">
-          <Search size={48} className="text-neutral-300 mb-4" />
-          <p className="text-lg font-semibold text-neutral-700 mb-1">未找到相关公告</p>
-          <p className="text-sm text-neutral-500 mb-4">
+          <Icon name="search" className="text-outline-variant text-[48px] mb-4" />
+          <p className="text-lg font-semibold text-on-surface mb-1">未找到相关公告</p>
+          <p className="text-sm text-on-surface-variant mb-4">
             没有匹配 &ldquo;{search}&rdquo; 的公告，请尝试其他关键字或清除筛选条件
           </p>
           <button
             onClick={() => { setSearch(""); setActiveDept(""); }}
-            className="text-sm text-primary hover:text-primary/80 border border-primary/30 px-4 py-2 rounded-lg"
+            className="bg-primary text-on-primary px-4 py-2 rounded-lg text-sm"
           >
             清除搜索
           </button>
