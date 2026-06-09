@@ -16,7 +16,7 @@ export function AnnouncementCard({ announcement }: Props) {
     <Link href={`/announcements/${announcement.id}`}>
       <article
         className={cn(
-          "bg-surface-container-low p-6 rounded-lg",
+          "relative bg-surface-container-low p-6 rounded-lg",
           "border-l-4",
           announcement.isPinned ? "border-primary" : "border-tertiary-container",
           "hover:bg-surface-container transition-colors cursor-pointer group",
