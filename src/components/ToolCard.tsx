@@ -17,7 +17,7 @@ export function ToolCard({ tool }: Props) {
             className="w-12 h-12 object-contain rounded-md flex-shrink-0"
           />
         ) : (
-          <div className="w-12 h-12 rounded-md bg-primary-100 text-primary-700 font-bold text-xl flex items-center justify-center flex-shrink-0">
+          <div className="w-12 h-12 rounded-md bg-primary/10 text-primary/80 font-bold text-xl flex items-center justify-center flex-shrink-0">
             {tool.name.charAt(0)}
           </div>
         )}
@@ -29,7 +29,7 @@ export function ToolCard({ tool }: Props) {
                 href={tool.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-primary-600 hover:text-primary-700"
+                className="text-primary hover:text-primary/80"
                 onClick={(e) => e.stopPropagation()}
                 aria-label={`打开 ${tool.name}`}
               >
@@ -54,7 +54,7 @@ export function ToolCard({ tool }: Props) {
         )}
         <div className="flex items-center gap-1.5 text-xs text-neutral-600">
           <Mail size={12} className="flex-shrink-0" />
-          <a href={`mailto:${tool.ownerEmail}`} className="hover:text-primary-600 truncate">
+          <a href={`mailto:${tool.ownerEmail}`} className="hover:text-primary truncate">
             {tool.ownerEmail}
           </a>
         </div>

@@ -72,8 +72,8 @@ export function ToolForm({ initial = {}, mode }: Props) {
         <div className={cn(
           "mb-4 px-4 py-3 rounded-lg border text-sm",
           toast.type === "success"
-            ? "bg-success-50 border-success-500 text-success-600"
-            : "bg-error-50 border-error-500 text-error-600"
+            ? "bg-success-green/10 border-success-green text-success-green"
+            : "bg-error-container border-error text-error"
         )}>
           {toast.message}
         </div>
@@ -84,7 +84,7 @@ export function ToolForm({ initial = {}, mode }: Props) {
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-neutral-700 mb-1.5">
-              工具名称 <span className="text-error-500">*</span>
+              工具名称 <span className="text-error">*</span>
             </label>
             <input
               type="text"
@@ -92,20 +92,20 @@ export function ToolForm({ initial = {}, mode }: Props) {
               onChange={(e) => setName(e.target.value)}
               className={cn(
                 "w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-1 transition-colors",
-                errors.name ? "border-error-500 focus:ring-error-500" : "border-neutral-300 focus:border-primary-500 focus:ring-primary-500"
+                errors.name ? "border-error focus:ring-error" : "border-neutral-300 focus:border-primary focus:ring-primary"
               )}
               placeholder="Slack"
             />
-            {errors.name && <p className="text-xs text-error-600 mt-1">{errors.name}</p>}
+            {errors.name && <p className="text-xs text-error mt-1">{errors.name}</p>}
           </div>
           <div>
             <label className="block text-sm font-medium text-neutral-700 mb-1.5">
-              所属部门 <span className="text-error-500">*</span>
+              所属部门 <span className="text-error">*</span>
             </label>
             <select
               value={department}
               onChange={(e) => setDepartment(e.target.value as Department)}
-              className="w-full px-3 py-2 border border-neutral-300 rounded-lg text-sm focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500"
+              className="w-full px-3 py-2 border border-neutral-300 rounded-lg text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
             >
               {DEPARTMENTS.map((d) => (
                 <option key={d} value={d}>{DEPT_LABELS[d]}</option>
@@ -124,11 +124,11 @@ export function ToolForm({ initial = {}, mode }: Props) {
               onChange={(e) => setUrl(e.target.value)}
               className={cn(
                 "w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-1 transition-colors",
-                errors.url ? "border-error-500 focus:ring-error-500" : "border-neutral-300 focus:border-primary-500 focus:ring-primary-500"
+                errors.url ? "border-error focus:ring-error" : "border-neutral-300 focus:border-primary focus:ring-primary"
               )}
               placeholder="https://..."
             />
-            {errors.url && <p className="text-xs text-error-600 mt-1">{errors.url}</p>}
+            {errors.url && <p className="text-xs text-error mt-1">{errors.url}</p>}
           </div>
           <div>
             <label className="block text-sm font-medium text-neutral-700 mb-1.5">Logo URL</label>
@@ -138,11 +138,11 @@ export function ToolForm({ initial = {}, mode }: Props) {
               onChange={(e) => setLogoUrl(e.target.value)}
               className={cn(
                 "w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-1 transition-colors",
-                errors.logoUrl ? "border-error-500 focus:ring-error-500" : "border-neutral-300 focus:border-primary-500 focus:ring-primary-500"
+                errors.logoUrl ? "border-error focus:ring-error" : "border-neutral-300 focus:border-primary focus:ring-primary"
               )}
               placeholder="https://..."
             />
-            {errors.logoUrl && <p className="text-xs text-error-600 mt-1">{errors.logoUrl}</p>}
+            {errors.logoUrl && <p className="text-xs text-error mt-1">{errors.logoUrl}</p>}
             {logoUrl && !errors.logoUrl && (
               <img src={logoUrl} alt="logo preview" className="mt-2 w-8 h-8 object-contain" />
             )}
@@ -153,7 +153,7 @@ export function ToolForm({ initial = {}, mode }: Props) {
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-neutral-700 mb-1.5">
-              Owner 姓名 <span className="text-error-500">*</span>
+              Owner 姓名 <span className="text-error">*</span>
             </label>
             <input
               type="text"
@@ -161,15 +161,15 @@ export function ToolForm({ initial = {}, mode }: Props) {
               onChange={(e) => setOwnerName(e.target.value)}
               className={cn(
                 "w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-1 transition-colors",
-                errors.ownerName ? "border-error-500 focus:ring-error-500" : "border-neutral-300 focus:border-primary-500 focus:ring-primary-500"
+                errors.ownerName ? "border-error focus:ring-error" : "border-neutral-300 focus:border-primary focus:ring-primary"
               )}
               placeholder="张晓明"
             />
-            {errors.ownerName && <p className="text-xs text-error-600 mt-1">{errors.ownerName}</p>}
+            {errors.ownerName && <p className="text-xs text-error mt-1">{errors.ownerName}</p>}
           </div>
           <div>
             <label className="block text-sm font-medium text-neutral-700 mb-1.5">
-              Owner Email <span className="text-error-500">*</span>
+              Owner Email <span className="text-error">*</span>
             </label>
             <input
               type="email"
@@ -177,11 +177,11 @@ export function ToolForm({ initial = {}, mode }: Props) {
               onChange={(e) => setOwnerEmail(e.target.value)}
               className={cn(
                 "w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-1 transition-colors",
-                errors.ownerEmail ? "border-error-500 focus:ring-error-500" : "border-neutral-300 focus:border-primary-500 focus:ring-primary-500"
+                errors.ownerEmail ? "border-error focus:ring-error" : "border-neutral-300 focus:border-primary focus:ring-primary"
               )}
               placeholder="zhang@company.com"
             />
-            {errors.ownerEmail && <p className="text-xs text-error-600 mt-1">{errors.ownerEmail}</p>}
+            {errors.ownerEmail && <p className="text-xs text-error mt-1">{errors.ownerEmail}</p>}
           </div>
         </div>
 
@@ -192,7 +192,7 @@ export function ToolForm({ initial = {}, mode }: Props) {
             type="text"
             value={ownerSlack}
             onChange={(e) => setOwnerSlack(e.target.value)}
-            className="w-full px-3 py-2 border border-neutral-300 rounded-lg text-sm focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500"
+            className="w-full px-3 py-2 border border-neutral-300 rounded-lg text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
             placeholder="@username"
           />
         </div>
@@ -207,10 +207,10 @@ export function ToolForm({ initial = {}, mode }: Props) {
             type="text"
             value={description}
             onChange={(e) => setDescription(e.target.value.slice(0, 100))}
-            className="w-full px-3 py-2 border border-neutral-300 rounded-lg text-sm focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500"
+            className="w-full px-3 py-2 border border-neutral-300 rounded-lg text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
             placeholder="一句话简介"
           />
-          <p className={cn("text-xs mt-1 text-right", description.length > 90 ? "text-error-600" : "text-neutral-400")}>
+          <p className={cn("text-xs mt-1 text-right", description.length > 90 ? "text-error" : "text-neutral-400")}>
             字数：{description.length}/100
           </p>
         </div>
@@ -227,7 +227,7 @@ export function ToolForm({ initial = {}, mode }: Props) {
             type="button"
             disabled={isPending}
             onClick={handleSave}
-            className="px-4 py-2 text-sm font-medium bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors disabled:opacity-50"
+            className="px-4 py-2 text-sm font-medium bg-primary text-white rounded-lg hover:bg-primary/80 transition-colors disabled:opacity-50"
           >
             {isPending ? "保存中..." : "保存工具"}
           </button>

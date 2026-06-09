@@ -35,7 +35,7 @@ export function AnnouncementsClient({ initialData, total }: Props) {
             placeholder="搜索公告标题..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 border border-neutral-300 rounded-lg text-sm focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500 bg-white"
+            className="w-full pl-10 pr-4 py-2.5 border border-neutral-300 rounded-lg text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary bg-white"
           />
         </div>
         <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
@@ -44,7 +44,7 @@ export function AnnouncementsClient({ initialData, total }: Props) {
             className={cn(
               "flex-shrink-0 text-xs font-medium px-3 py-1.5 rounded-full border transition-colors",
               !activeDept
-                ? "bg-primary-100 text-primary-700 border-primary-300"
+                ? "bg-primary/10 text-primary/80 border-primary/30"
                 : "bg-white text-neutral-600 border-neutral-200 hover:bg-neutral-50"
             )}
           >
@@ -57,7 +57,7 @@ export function AnnouncementsClient({ initialData, total }: Props) {
               className={cn(
                 "flex-shrink-0 text-xs font-medium px-3 py-1.5 rounded-full border transition-colors",
                 activeDept === dept
-                  ? "bg-primary-100 text-primary-700 border-primary-300"
+                  ? "bg-primary/10 text-primary/80 border-primary/30"
                   : "bg-white text-neutral-600 border-neutral-200 hover:bg-neutral-50"
               )}
             >
@@ -86,7 +86,7 @@ export function AnnouncementsClient({ initialData, total }: Props) {
           </p>
           <button
             onClick={() => { setSearch(""); setActiveDept(""); }}
-            className="text-sm text-primary-600 hover:text-primary-700 border border-primary-300 px-4 py-2 rounded-lg"
+            className="text-sm text-primary hover:text-primary/80 border border-primary/30 px-4 py-2 rounded-lg"
           >
             清除搜索
           </button>

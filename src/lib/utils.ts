@@ -33,7 +33,7 @@ export const DEPT_BADGE_CLASSES: Record<Department, string> = {
   ALL: "bg-gray-100 text-gray-700",
   PEOPLE: "bg-purple-100 text-purple-800",
   FINANCE: "bg-green-100 text-green-800",
-  GTM: "bg-orange-100 text-orange-800",
+  GTM: "bg-amber-100 text-amber-700",
   ENGINEERING: "bg-blue-100 text-blue-800",
   IT: "bg-zinc-100 text-zinc-700",
 };

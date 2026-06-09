@@ -76,7 +76,7 @@ export default async function AnnouncementDetailPage({ params }: Props) {
             <p className="text-sm font-medium text-neutral-700 mb-2">📎 附件</p>
             <a
               href={announcement.attachmentUrl}
-              className="inline-flex items-center gap-1.5 text-sm text-primary-600 hover:text-primary-700"
+              className="inline-flex items-center gap-1.5 text-sm text-primary hover:text-primary/80"
               download
             >
               <Download size={14} />

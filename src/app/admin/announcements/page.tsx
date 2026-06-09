@@ -29,7 +29,7 @@ export default async function AdminAnnouncementsPage() {
         <h1 className="text-xl font-bold text-neutral-900">公告管理</h1>
         <Link
           href="/admin/announcements/new"
-          className="inline-flex items-center gap-1.5 text-sm font-medium bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors"
+          className="inline-flex items-center gap-1.5 text-sm font-medium bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/80 transition-colors"
         >
           <Plus size={16} />
           新建公告
@@ -55,7 +55,7 @@ export default async function AdminAnnouncementsPage() {
                     <div className="flex flex-col items-center gap-2">
                       <span className="text-4xl">📋</span>
                       <p className="font-medium">暂无公告</p>
-                      <p className="text-xs">点击"新建公告"发布第一条公告</p>
+                      <p className="text-xs">点击&ldquo;新建公告&rdquo;发布第一条公告</p>
                     </div>
                   </td>
                 </tr>
@@ -78,7 +78,7 @@ export default async function AdminAnnouncementsPage() {
                       <div className="flex items-center gap-2">
                         <Link
                           href={`/admin/announcements/${ann.id}/edit`}
-                          className="inline-flex items-center gap-1 text-xs text-neutral-600 hover:text-primary-600 px-2 py-1 rounded border border-neutral-200 hover:border-primary-300 transition-colors"
+                          className="inline-flex items-center gap-1 text-xs text-neutral-600 hover:text-primary px-2 py-1 rounded border border-neutral-200 hover:border-primary/30 transition-colors"
                         >
                           <Pencil size={12} />
                           编辑
