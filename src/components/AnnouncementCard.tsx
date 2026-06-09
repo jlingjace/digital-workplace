@@ -12,14 +12,18 @@ export function AnnouncementCard({ announcement }: Props) {
   const expired = isExpired(announcement.expiresAt);
   const excerpt = announcement.content.replace(/<[^>]*>/g, "").trim().slice(0, 120);
 
+  const borderClass = announcement.isPinned
+    ? "border-l-4 border-l-primary bg-primary/5"
+    : announcement.department === "IT"
+    ? "border-l-4 border-l-tertiary"
+    : "border-l-4 border-l-outline-variant";
+
   return (
     <Link href={`/announcements/${announcement.id}`}>
       <article
         className={cn(
-          "relative bg-surface-container-low p-6 rounded-lg",
-          "border-l-4",
-          announcement.isPinned ? "border-primary" : "border-tertiary-container",
-          "hover:bg-surface-container transition-colors cursor-pointer group",
+          "relative bg-surface-container-lowest rounded-lg border border-outline-variant p-5 hover:bg-surface-container transition-colors cursor-pointer group",
+          borderClass,
           expired && "opacity-60"
         )}
         aria-label={announcement.title}
