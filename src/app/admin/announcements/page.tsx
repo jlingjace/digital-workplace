@@ -33,7 +33,7 @@ export default async function AdminAnnouncementsPage() {
           className="inline-flex items-center gap-1.5 text-sm font-medium bg-primary text-on-primary px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors"
         >
           <Icon name="add" className="text-[16px]" />
-          New Announcement
+          新建公告
         </Link>
       </div>
 
@@ -56,7 +56,7 @@ export default async function AdminAnnouncementsPage() {
                     <div className="flex flex-col items-center gap-2">
                       <Icon name="article" className="text-[40px] text-on-surface-variant/40" />
                       <p className="font-medium">暂无公告</p>
-                      <p className="text-xs">点击&ldquo;New Announcement&rdquo;发布第一条公告</p>
+                      <p className="text-xs">点击「新建公告」发布第一条公告</p>
                     </div>
                   </td>
                 </tr>

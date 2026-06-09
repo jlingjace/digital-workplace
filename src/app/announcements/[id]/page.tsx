@@ -64,7 +64,7 @@ export default async function AnnouncementDetailPage({ params }: Props) {
           )}
           {expired && (
             <span className="bg-error-container text-on-error-container px-3 py-1 rounded-full text-[10px] font-mono">
-              Expired
+              已过期
             </span>
           )}
         </div>

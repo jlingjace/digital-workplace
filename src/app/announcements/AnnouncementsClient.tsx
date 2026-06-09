@@ -31,11 +31,11 @@ export function AnnouncementsClient({ initialData, total }: Props) {
         <Icon name="search" className="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]" />
         <input
           type="text"
-          placeholder="Search announcements..."
+          placeholder="搜索公告..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="w-full pl-10 pr-4 py-2.5 border border-outline-variant rounded-full text-sm focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary bg-surface-container-low text-on-surface"
-          aria-label="Search announcements"
+          aria-label="搜索公告"
         />
       </div>
 
@@ -51,7 +51,7 @@ export function AnnouncementsClient({ initialData, total }: Props) {
           )}
           aria-pressed={!activeDept}
         >
-          All
+          全部
         </button>
         {DEPARTMENTS.filter((d) => d !== "ALL").map((dept) => (
           <button
@@ -71,7 +71,7 @@ export function AnnouncementsClient({ initialData, total }: Props) {
       </div>
 
       <p className="text-sm text-on-surface-variant mb-4">
-        {filtered.length} announcement{filtered.length !== 1 ? "s" : ""}
+        共 {filtered.length} 条公告
         {activeDept ? ` · ${DEPT_LABELS[activeDept as Department]}` : ""}
       </p>
 
@@ -84,15 +84,15 @@ export function AnnouncementsClient({ initialData, total }: Props) {
       ) : filtered.length === 0 ? (
         <div className="flex flex-col items-center py-16 text-center">
           <Icon name="search_off" className="text-[48px] text-on-surface-variant/30 mb-4" />
-          <p className="text-lg font-semibold text-on-surface mb-1">No announcements found</p>
+          <p className="text-lg font-semibold text-on-surface mb-1">暂无公告</p>
           <p className="text-sm text-on-surface-variant mb-4">
-            No results for &ldquo;{search}&rdquo;. Try a different keyword or clear filters.
+            未找到与「{search}」相关的公告，请尝试其他关键词或清除筛选条件。
           </p>
           <button
             onClick={() => { setSearch(""); setActiveDept(""); }}
             className="text-sm text-primary hover:text-primary/80 border border-primary/30 px-4 py-2 rounded-lg"
           >
-            Clear search
+            清除搜索
           </button>
         </div>
       ) : (

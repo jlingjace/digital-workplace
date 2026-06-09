@@ -9,6 +9,7 @@ interface Props {
 
 export function AnnouncementCard({ announcement }: Props) {
   const expired = isExpired(announcement.expiresAt);
+  const excerpt = announcement.content.replace(/<[^>]*>/g, "").trim().slice(0, 120);
 
   return (
     <Link href={`/announcements/${announcement.id}`}>
@@ -36,10 +37,13 @@ export function AnnouncementCard({ announcement }: Props) {
         </h4>
         {expired && (
           <span className="inline-block text-[10px] bg-error-container text-on-error-container px-3 py-1 rounded-full font-mono mb-2">
-            Expired
+            已过期
           </span>
         )}
         <p className="text-[16px] text-on-surface-variant line-clamp-2">
+          {excerpt}
+        </p>
+        <p className="text-[14px] text-on-surface-variant/70 mt-2">
           {announcement.authorName}
         </p>
       </article>

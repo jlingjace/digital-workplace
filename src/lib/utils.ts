@@ -17,7 +17,9 @@ export function formatDate(dateStr: string): string {
 
 export function formatTimeAgo(dateStr: string): string {
   const diff = Date.now() - new Date(dateStr).getTime();
+  if (diff < 0) return formatDate(dateStr);
   const minutes = Math.floor(diff / 60000);
+  if (minutes < 1) return "刚刚";
   if (minutes < 60) return `${minutes}分钟前`;
   const hours = Math.floor(minutes / 60);
   if (hours < 24) return `${hours}小时前`;
