@@ -39,13 +39,14 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
+  id              String          @id @default(cuid())
+  name            String?
+  email           String?         @unique
+  emailVerified   DateTime?
+  image           String?
+  accounts        Account[]
+  sessions        Session[]
+  accessRequests  AccessRequest[]
 }
 
 model VerificationToken {
@@ -106,4 +107,50 @@ model Tool {
   updatedAt   DateTime   @updatedAt
 
   @@index([department])
+}
+
+// System Catalog models
+enum RequestStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model SystemEntry {
+  id            String          @id @default(cuid())
+  name          String
+  description   String?         @db.Text
+  url           String
+  iconUrl       String?
+  category      String
+  status        String          @default("active")
+  ownerName     String
+  ownerEmail    String?
+  ownerSlack    String?
+  isQuickAccess Boolean         @default(false)
+  deletedAt     DateTime?
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  accessRequests AccessRequest[]
+
+  @@index([category])
+  @@index([status])
+  @@index([deletedAt])
+}
+
+model AccessRequest {
+  id          String        @id @default(cuid())
+  system      SystemEntry   @relation(fields: [systemId], references: [id])
+  systemId    String
+  requester   User          @relation(fields: [requesterId], references: [id])
+  requesterId String
+  status      RequestStatus @default(PENDING)
+  note        String?       @db.Text
+  reviewedBy  String?
+  reviewedAt  DateTime?
+  createdAt   DateTime      @default(now())
+
+  @@index([systemId])
+  @@index([requesterId])
+  @@index([status])
 }
