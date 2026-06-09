@@ -1,4 +1,5 @@
 import Link from "next/link";
+import DOMPurify from "isomorphic-dompurify";
 import { Announcement } from "@/lib/types";
 import { DepartmentBadge } from "@/components/DepartmentBadge";
 import { cn, formatDate } from "@/lib/utils";
@@ -39,7 +40,7 @@ export function AnnouncementsFeed({ announcements }: Props) {
           <Link key={ann.id} href={`/announcements/${ann.id}`} className="block group">
             <article
               className={cn(
-                "bg-surface-container-lowest rounded-lg p-4 shadow-card hover:shadow-card-hover transition-all duration-200",
+                "bg-surface-container rounded-lg p-4 shadow-card hover:shadow-card-hover transition-all duration-200",
                 getBorderClass(ann.department)
               )}
             >
@@ -56,7 +57,7 @@ export function AnnouncementsFeed({ announcements }: Props) {
                 {ann.title}
               </h3>
               <p className="text-[13px] text-on-surface-variant line-clamp-2 leading-relaxed">
-                {ann.content.replace(/<[^>]*>/g, "")}
+                {DOMPurify.sanitize(ann.content, { ALLOWED_TAGS: [] })}
               </p>
             </article>
           </Link>

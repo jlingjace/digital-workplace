@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Icon } from "@/components/ui/Icon";
 
 interface Event {
@@ -74,9 +75,12 @@ export function UpcomingEventsCard() {
         ))}
       </ul>
 
-      <button className="w-full mt-4 bg-inverse-surface text-inverse-on-surface py-2.5 rounded-lg text-[13px] font-medium hover:opacity-90 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+      <Link
+        href="/events"
+        className="block w-full mt-4 bg-inverse-surface text-inverse-on-surface text-center py-2.5 rounded-lg text-[13px] font-medium hover:opacity-90 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+      >
         View All Events
-      </button>
+      </Link>
     </section>
   );
 }

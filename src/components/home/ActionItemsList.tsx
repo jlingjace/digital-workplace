@@ -18,10 +18,6 @@ const MOCK_ACTION_ITEMS: ActionItem[] = [
   { id: "4", title: "Complete mandatory security training", dueDate: "2026-06-05", done: false },
 ];
 
-function isOverdue(dueDate: string): boolean {
-  return new Date(dueDate) < new Date();
-}
-
 function formatShortDate(dateStr: string): string {
   return new Date(dateStr).toLocaleDateString("en-US", {
     month: "short",
@@ -31,6 +27,8 @@ function formatShortDate(dateStr: string): string {
 
 export function ActionItemsList() {
   const [items, setItems] = useState<ActionItem[]>(MOCK_ACTION_ITEMS);
+  // Stable reference to avoid SSR/CSR hydration mismatch when comparing dates
+  const [now] = useState<Date>(() => new Date());
 
   const toggle = (id: string) => {
     setItems((prev) =>
@@ -54,45 +52,57 @@ export function ActionItemsList() {
         )}
       </div>
 
-      <ul className="flex flex-col gap-2">
+      <ul className="flex flex-col gap-1">
         {items.map((item) => {
-          const overdue = !item.done && isOverdue(item.dueDate);
+          const overdue = !item.done && new Date(item.dueDate) < now;
           return (
-            <li key={item.id} className="flex items-start gap-3">
-              <button
-                onClick={() => toggle(item.id)}
-                aria-label={item.done ? `Mark "${item.title}" as pending` : `Mark "${item.title}" as done`}
-                className={cn(
-                  "w-5 h-5 rounded border-2 flex-shrink-0 mt-0.5 flex items-center justify-center transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
-                  item.done
-                    ? "bg-primary border-primary"
-                    : "border-outline-variant hover:border-primary"
-                )}
-              >
-                {item.done && (
-                  <Icon name="check" className="text-on-primary text-[13px]" />
-                )}
-              </button>
-              <div className="flex-1 min-w-0">
-                <p
+            <li
+              key={item.id}
+              className="flex items-start gap-3 rounded-lg p-1 -mx-1 hover:bg-surface-container transition-colors"
+            >
+              {/* Native checkbox hidden, custom-styled label for visual fidelity */}
+              <label className="flex items-start gap-3 w-full cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={item.done}
+                  onChange={() => toggle(item.id)}
+                  aria-label={item.title}
+                  className="sr-only"
+                />
+                <span
+                  aria-hidden="true"
                   className={cn(
-                    "text-[13px] font-medium leading-tight",
-                    item.done && "line-through text-on-surface-variant"
+                    "w-5 h-5 rounded border-2 flex-shrink-0 mt-0.5 flex items-center justify-center transition-colors",
+                    item.done
+                      ? "bg-primary border-primary"
+                      : "border-outline-variant group-hover:border-primary"
                   )}
                 >
-                  {item.title}
-                </p>
-                <time
-                  dateTime={item.dueDate}
-                  className={cn(
-                    "text-[11px] font-mono mt-0.5 block",
-                    overdue ? "text-primary font-bold" : "text-on-surface-variant"
+                  {item.done && (
+                    <Icon name="check" className="text-on-primary text-[13px]" />
                   )}
-                >
-                  {overdue ? "Overdue · " : "Due "}
-                  {formatShortDate(item.dueDate)}
-                </time>
-              </div>
+                </span>
+                <div className="flex-1 min-w-0">
+                  <p
+                    className={cn(
+                      "text-[13px] font-medium leading-tight",
+                      item.done && "line-through text-on-surface-variant"
+                    )}
+                  >
+                    {item.title}
+                  </p>
+                  <time
+                    dateTime={item.dueDate}
+                    className={cn(
+                      "text-[11px] font-mono mt-0.5 block",
+                      overdue ? "text-primary font-bold" : "text-on-surface-variant"
+                    )}
+                  >
+                    {overdue ? "Overdue · " : "Due "}
+                    {formatShortDate(item.dueDate)}
+                  </time>
+                </div>
+              </label>
             </li>
           );
         })}
