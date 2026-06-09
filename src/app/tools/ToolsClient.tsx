@@ -68,19 +68,23 @@ export function ToolsClient({ initialData }: Props) {
   });
 
   const showFeatured = !search && activeTab === "ALL" && featuredTools.length > 0;
+  const activeTabId = `tab-${activeTab}`;
 
   return (
     <div className="p-6 lg:p-10 bg-background min-h-screen">
-      {/* Toast */}
-      {toast && (
-        <div
-          role="alert"
-          aria-live="polite"
-          className="fixed top-6 right-6 z-50 bg-primary text-on-primary px-4 py-3 rounded-lg shadow-lg text-sm font-mono"
-        >
-          {toast}
-        </div>
-      )}
+      {/* Toast — always rendered so aria-live is registered before content appears */}
+      <div
+        role="alert"
+        aria-live="polite"
+        aria-atomic="true"
+        className="fixed top-6 right-6 z-50 pointer-events-none"
+      >
+        {toast && (
+          <div className="bg-primary text-on-primary px-4 py-3 rounded-lg shadow-lg text-sm font-mono pointer-events-auto">
+            {toast}
+          </div>
+        )}
+      </div>
 
       {/* Page Header */}
       <div className="mb-8 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
@@ -193,8 +197,10 @@ export function ToolsClient({ initialData }: Props) {
         {DEPARTMENTS.map((dept) => (
           <button
             key={dept}
+            id={`tab-${dept}`}
             role="tab"
             aria-selected={activeTab === dept}
+            aria-controls="dept-tabpanel"
             onClick={() => setActiveTab(dept)}
             className={cn(
               "px-4 py-2 rounded-full text-[14px] font-mono font-medium transition-colors",
@@ -218,18 +224,26 @@ export function ToolsClient({ initialData }: Props) {
           <p className="text-[18px] font-semibold text-on-surface mb-1">
             No tools found
           </p>
-          <p className="text-[14px] text-on-surface-variant">
-            Can&apos;t find &ldquo;{search}&rdquo;? It may not be listed yet.
-            <br />
-            Contact IT:{" "}
-            <a href="mailto:it@company.com" className="text-primary hover:underline">
-              it@company.com
-            </a>
-          </p>
+          {search ? (
+            <p className="text-[14px] text-on-surface-variant">
+              Can&apos;t find &ldquo;{search}&rdquo;? It may not be listed yet.
+              <br />
+              Contact IT:{" "}
+              <a href="mailto:it@company.com" className="text-primary hover:underline">
+                it@company.com
+              </a>
+            </p>
+          ) : (
+            <p className="text-[14px] text-on-surface-variant">
+              No tools found in this category yet.
+            </p>
+          )}
         </div>
       ) : (
         <div
+          id="dept-tabpanel"
           role="tabpanel"
+          aria-labelledby={activeTabId}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
         >
           {filtered.map((tool) => {
