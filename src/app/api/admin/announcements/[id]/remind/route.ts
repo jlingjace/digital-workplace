@@ -45,10 +45,11 @@ export async function POST(
 
   const readUserIds = new Set(announcement.readReceipts.map((r) => r.userId))
 
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
   let unreadEmails: string[]
 
   if (recipientOverride && recipientOverride.length > 0) {
-    unreadEmails = recipientOverride
+    unreadEmails = recipientOverride.filter((e) => typeof e === 'string' && EMAIL_RE.test(e))
   } else {
     // Find all users who haven't read this announcement
     const unreadUsers = await prisma.user.findMany({

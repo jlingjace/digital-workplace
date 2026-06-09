@@ -39,7 +39,6 @@ export async function GET(request: NextRequest) {
         title: true,
         department: true,
         authorName: true,
-        authorContact: true,
         publishedAt: true,
         expiresAt: true,
         isPinned: true,
