@@ -44,6 +44,14 @@ export async function PUT(
     return NextResponse.json({ error: 'Announcement not found' }, { status: 404 })
   }
 
+  // Only DRAFT announcements are editable; re-submitted/published ones are locked
+  if (existing.status !== AnnouncementStatus.DRAFT) {
+    return NextResponse.json(
+      { error: 'Only DRAFT announcements can be edited' },
+      { status: 422 }
+    )
+  }
+
   let body: unknown
   try {
     body = await request.json()
@@ -60,16 +68,14 @@ export async function PUT(
     publishedAt,
     expiresAt,
     isPinned,
+    isMandatory,
     attachmentUrl,
-    status,
+    slackChannelId,
   } = body as Record<string, unknown>
 
   // Validate enum fields if provided
   if (department !== undefined && !Object.values(Department).includes(department as Department)) {
     return NextResponse.json({ error: 'Invalid department value' }, { status: 400 })
-  }
-  if (status !== undefined && !Object.values(AnnouncementStatus).includes(status as AnnouncementStatus)) {
-    return NextResponse.json({ error: 'Invalid status value' }, { status: 400 })
   }
 
   let parsedPublishedAt: Date | undefined
@@ -92,8 +98,9 @@ export async function PUT(
       ...(parsedPublishedAt !== undefined ? { publishedAt: parsedPublishedAt } : {}),
       ...(parsedExpiresAt !== undefined ? { expiresAt: parsedExpiresAt } : {}),
       ...(isPinned !== undefined ? { isPinned: isPinned as boolean } : {}),
+      ...(isMandatory !== undefined ? { isMandatory: isMandatory as boolean } : {}),
       ...(attachmentUrl !== undefined ? { attachmentUrl: attachmentUrl as string | null } : {}),
-      ...(status !== undefined ? { status: status as AnnouncementStatus } : {}),
+      ...(slackChannelId !== undefined ? { slackChannelId: slackChannelId as string | null } : {}),
     },
   })
 
