@@ -3,6 +3,14 @@ import type { Announcement } from '@prisma/client'
 // Uses Resend (preferred) or falls back to a generic SMTP via fetch
 // Set RESEND_API_KEY for Resend, or SMTP_* vars for generic SMTP
 
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+}
+
 const RESEND_API_KEY = process.env.RESEND_API_KEY
 const EMAIL_FROM = process.env.EMAIL_FROM ?? 'noreply@company.com'
 
@@ -41,7 +49,7 @@ function buildApprovalRequestHtml(
   const summary = announcement.content.replace(/<[^>]+>/g, '').slice(0, 300)
   return `
     <h2>Announcement Approval Request</h2>
-    <p><strong>Title:</strong> ${announcement.title}</p>
+    <p><strong>Title:</strong> ${escapeHtml(announcement.title)}</p>
     <p><strong>Preview:</strong> ${summary}${summary.length === 300 ? '…' : ''}</p>
     <p>
       <a href="${adminUrl}" style="background:#2563eb;color:#fff;padding:8px 16px;border-radius:4px;text-decoration:none;">
@@ -59,7 +67,7 @@ function buildReminderHtml(
   return `
     <h2>Action Required: Read Announcement</h2>
     <p>You have not yet read the following mandatory announcement:</p>
-    <p><strong>${announcement.title}</strong></p>
+    <p><strong>${escapeHtml(announcement.title)}</strong></p>
     <p>
       <a href="${url}" style="background:#2563eb;color:#fff;padding:8px 16px;border-radius:4px;text-decoration:none;">
         Read Now
