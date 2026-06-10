@@ -36,10 +36,14 @@ export function ToolsClient({ initialData }: Props) {
   return (
     <div>
       {/* Department Tab Filter Pills */}
-      <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-2 mb-5">
+      <div role="tablist" aria-label="Department filter" className="flex gap-2 overflow-x-auto scrollbar-hide pb-2 mb-5">
         {TAB_ORDER.map((dept) => (
           <button
             key={dept}
+            id={`tab-${dept}`}
+            role="tab"
+            aria-selected={activeTab === dept}
+            aria-controls="tools-tabpanel"
             onClick={() => setActiveTab(dept)}
             className={cn(
               "flex-shrink-0 px-4 py-2 text-xs font-mono font-medium rounded-full transition-colors",
@@ -65,23 +69,30 @@ export function ToolsClient({ initialData }: Props) {
         />
       </div>
 
-      {!hasResults ? (
-        <div className="flex flex-col items-center py-16 text-center">
-          <span className="text-5xl mb-4">🔧</span>
-          <p className="text-lg font-semibold text-on-surface mb-1">No tools found</p>
-          <p className="text-sm text-on-surface-variant">
-            Can&apos;t find &ldquo;{search}&rdquo;? It may not be listed yet.
-            <br />
-            Contact IT to add it: <a href="mailto:it@company.com" className="text-primary">it@company.com</a>
-          </p>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filtered.map((tool) => (
-            <ToolCard key={tool.id} tool={tool} />
-          ))}
-        </div>
-      )}
+      <div id="tools-tabpanel" role="tabpanel" aria-labelledby={`tab-${activeTab}`}>
+        {!hasResults ? (
+          <div className="flex flex-col items-center py-16 text-center">
+            <span className="text-5xl mb-4">🔧</span>
+            <p className="text-lg font-semibold text-on-surface mb-1">No tools found</p>
+            <p className="text-sm text-on-surface-variant">
+              {search
+                ? <>Can&apos;t find &ldquo;{search}&rdquo;? It may not be listed yet.</>
+                : <>No tools found in this category yet.</>}
+              <br />
+              Contact IT to add it:{" "}
+              <a href="mailto:it@company.com" className="text-primary hover:underline">
+                it@company.com
+              </a>
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {filtered.map((tool) => (
+              <ToolCard key={tool.id} tool={tool} />
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

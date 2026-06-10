@@ -10,10 +10,18 @@ import { cn } from "@/lib/utils";
 function StatusBadge({ status }: { status: AnnouncementStatus }) {
   const cls = {
     DRAFT: "bg-surface-container text-on-surface-variant",
+    PENDING_APPROVAL: "bg-warning-amber/10 text-warning-amber border border-warning-amber/30",
     PUBLISHED: "bg-surface-container-low text-success-green border border-success-green/30",
     ARCHIVED: "bg-error-container text-on-error-container",
+    EXPIRED: "bg-surface-container text-on-surface-variant/60",
   }[status];
-  const label = { DRAFT: "草稿", PUBLISHED: "已发布", ARCHIVED: "已下架" }[status];
+  const label = {
+    DRAFT: "草稿",
+    PENDING_APPROVAL: "待审批",
+    PUBLISHED: "已发布",
+    ARCHIVED: "已下架",
+    EXPIRED: "已过期",
+  }[status];
   return (
     <span className={cn("text-xs font-mono px-2 py-0.5 rounded-full", cls)}>
       {label}

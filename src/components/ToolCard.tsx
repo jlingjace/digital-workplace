@@ -1,11 +1,22 @@
+"use client";
+
+import { useState } from "react";
 import { Icon } from "@/components/ui/Icon";
 import { Tool } from "@/lib/types";
+import { cn } from "@/lib/utils";
 
 interface Props {
   tool: Tool;
 }
 
 export function ToolCard({ tool }: Props) {
+  const [toastVisible, setToastVisible] = useState(false);
+
+  const handleRequestAccess = () => {
+    setToastVisible(true);
+    setTimeout(() => setToastVisible(false), 3000);
+  };
+
   return (
     <div className="bg-surface-container-lowest rounded-xl border border-outline-variant p-6 hover:border-primary hover:shadow-md transition-all duration-150 flex flex-col">
       {/* Top: icon/logo + name + status badge */}
@@ -56,11 +67,24 @@ export function ToolCard({ tool }: Props) {
           </span>
         )}
         <button
-          onClick={() => window.alert("Access request submitted!")}
+          onClick={handleRequestAccess}
           className="flex-1 py-2 border border-outline-variant text-on-surface rounded-lg text-[13px] font-mono hover:bg-surface-container transition-colors"
         >
           Request Access
         </button>
+      </div>
+
+      {/* Toast notification — always in DOM so aria-live region is registered before content changes */}
+      <div
+        role="alert"
+        aria-live="polite"
+        aria-atomic="true"
+        className={cn(
+          "fixed top-6 right-6 z-50 bg-primary text-on-primary px-4 py-3 rounded-lg shadow-lg text-sm font-mono transition-opacity duration-200",
+          toastVisible ? "opacity-100" : "opacity-0 pointer-events-none"
+        )}
+      >
+        Access request submitted!
       </div>
     </div>
   );
