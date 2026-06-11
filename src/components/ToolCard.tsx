@@ -1,68 +1,91 @@
-import { ExternalLink, User, Mail, MessageSquare } from "lucide-react";
+"use client";
+
+import { useState } from "react";
+import { Icon } from "@/components/ui/Icon";
 import { Tool } from "@/lib/types";
-import { DepartmentBadge } from "./DepartmentBadge";
+import { cn } from "@/lib/utils";
 
 interface Props {
   tool: Tool;
 }
 
 export function ToolCard({ tool }: Props) {
+  const [toastVisible, setToastVisible] = useState(false);
+
+  const handleRequestAccess = () => {
+    setToastVisible(true);
+    setTimeout(() => setToastVisible(false), 3000);
+  };
+
   return (
-    <div className="bg-white rounded-lg border border-neutral-200 p-4 shadow-card hover:shadow-card-hover transition-all duration-200">
+    <div className="bg-surface-container-lowest rounded-xl border border-outline-variant p-6 hover:border-primary hover:shadow-md transition-all duration-150 flex flex-col">
+      {/* Top: icon/logo + name + status badge */}
       <div className="flex items-start gap-3 mb-3">
         {tool.logoUrl ? (
           <img
             src={tool.logoUrl}
             alt={tool.name}
-            className="w-12 h-12 object-contain rounded-md flex-shrink-0"
+            className="w-10 h-10 object-contain rounded-md flex-shrink-0"
           />
         ) : (
-          <div className="w-12 h-12 rounded-md bg-primary/10 text-primary/80 font-bold text-xl flex items-center justify-center flex-shrink-0">
-            {tool.name.charAt(0)}
-          </div>
+          <Icon name="dns" className="text-primary text-[32px] flex-shrink-0" />
         )}
-        <div className="min-w-0">
-          <div className="flex items-center gap-2 flex-wrap">
-            <h3 className="font-semibold text-neutral-900 text-sm">{tool.name}</h3>
-            {tool.url && (
-              <a
-                href={tool.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary hover:text-primary/80"
-                onClick={(e) => e.stopPropagation()}
-                aria-label={`打开 ${tool.name}`}
-              >
-                <ExternalLink size={13} />
-              </a>
-            )}
-          </div>
-          <DepartmentBadge department={tool.department} className="mt-1" />
+        <div className="flex-1 min-w-0">
+          <h3 className="text-[18px] font-semibold text-on-surface leading-snug">{tool.name}</h3>
+          <span className="inline-block bg-tertiary/10 text-tertiary text-[11px] font-mono rounded-full px-2 py-0.5 mt-1">
+            Open Access
+          </span>
         </div>
       </div>
 
-      <div className="border-t border-neutral-100 pt-3 space-y-1.5">
-        <div className="flex items-center gap-1.5 text-xs text-neutral-600">
-          <User size={12} className="flex-shrink-0" />
-          <span>{tool.ownerName}</span>
-        </div>
-        {tool.ownerSlack && (
-          <div className="flex items-center gap-1.5 text-xs text-neutral-600">
-            <MessageSquare size={12} className="flex-shrink-0" />
-            <span>{tool.ownerSlack}</span>
-          </div>
-        )}
-        <div className="flex items-center gap-1.5 text-xs text-neutral-600">
-          <Mail size={12} className="flex-shrink-0" />
-          <a href={`mailto:${tool.ownerEmail}`} className="hover:text-primary truncate">
-            {tool.ownerEmail}
-          </a>
-        </div>
-      </div>
-
+      {/* Description */}
       {tool.description && (
-        <p className="mt-3 text-xs text-neutral-500 line-clamp-2">{tool.description}</p>
+        <p className="text-[14px] text-on-surface-variant line-clamp-2 mb-3">
+          {tool.description}
+        </p>
       )}
+
+      {/* Owner */}
+      <p className="text-[12px] font-mono text-on-surface-variant mb-4">
+        Owner: {tool.ownerName}
+      </p>
+
+      {/* CTA Buttons */}
+      <div className="flex gap-2 mt-auto">
+        {tool.url ? (
+          <a
+            href={tool.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex-1 text-center py-2 bg-primary text-on-primary rounded-lg text-[13px] font-mono hover:bg-primary/90 transition-colors"
+          >
+            Go to Tool
+          </a>
+        ) : (
+          <span className="flex-1 text-center py-2 bg-primary/40 text-on-primary rounded-lg text-[13px] font-mono cursor-not-allowed">
+            Go to Tool
+          </span>
+        )}
+        <button
+          onClick={handleRequestAccess}
+          className="flex-1 py-2 border border-outline-variant text-on-surface rounded-lg text-[13px] font-mono hover:bg-surface-container transition-colors"
+        >
+          Request Access
+        </button>
+      </div>
+
+      {/* Toast notification — always in DOM so aria-live region is registered before content changes */}
+      <div
+        role="alert"
+        aria-live="polite"
+        aria-atomic="true"
+        className={cn(
+          "fixed top-6 right-6 z-50 bg-primary text-on-primary px-4 py-3 rounded-lg shadow-lg text-sm font-mono transition-opacity duration-200",
+          toastVisible ? "opacity-100" : "opacity-0 pointer-events-none"
+        )}
+      >
+        Access request submitted!
+      </div>
     </div>
   );
 }

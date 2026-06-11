@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Search } from "lucide-react";
+import { Icon } from "@/components/ui/Icon";
 import { Tool, Department } from "@/lib/types";
 import { ToolCard } from "@/components/ToolCard";
 import { cn, DEPT_LABELS, DEPARTMENTS } from "@/lib/utils";
@@ -10,78 +10,89 @@ interface Props {
   initialData: Tool[];
 }
 
+const TAB_LABELS: Record<Department, string> = {
+  ALL: "All Systems",
+  IT: "IT",
+  ENGINEERING: "Engineering",
+  GTM: "GTM",
+  PEOPLE: "People",
+  FINANCE: "Finance",
+};
+
+const TAB_ORDER: Department[] = ["ALL", "IT", "ENGINEERING", "GTM", "PEOPLE", "FINANCE"];
+
 export function ToolsClient({ initialData }: Props) {
   const [search, setSearch] = useState("");
+  const [activeTab, setActiveTab] = useState<Department>("ALL");
 
   const filtered = initialData.filter((t) => {
-    if (!search) return true;
-    const q = search.toLowerCase();
-    return t.name.toLowerCase().includes(q) || t.ownerName.toLowerCase().includes(q);
+    const matchesDept = activeTab === "ALL" || t.department === activeTab;
+    const matchesSearch = !search || t.name.toLowerCase().includes(search.toLowerCase()) || t.ownerName.toLowerCase().includes(search.toLowerCase());
+    return matchesDept && matchesSearch;
   });
-
-  // Group by department
-  const grouped = DEPARTMENTS.reduce<Record<Department, Tool[]>>(
-    (acc, dept) => {
-      acc[dept] = filtered.filter((t) => t.department === dept);
-      return acc;
-    },
-    {} as Record<Department, Tool[]>
-  );
 
   const hasResults = filtered.length > 0;
 
   return (
     <div>
+      {/* Department Tab Filter Pills */}
+      <div role="tablist" aria-label="Department filter" className="flex gap-2 overflow-x-auto scrollbar-hide pb-2 mb-5">
+        {TAB_ORDER.map((dept) => (
+          <button
+            key={dept}
+            id={`tab-${dept}`}
+            role="tab"
+            aria-selected={activeTab === dept}
+            aria-controls="tools-tabpanel"
+            onClick={() => setActiveTab(dept)}
+            className={cn(
+              "flex-shrink-0 px-4 py-2 text-xs font-mono font-medium rounded-full transition-colors",
+              activeTab === dept
+                ? "bg-primary text-on-primary"
+                : "bg-surface-container-low text-on-surface hover:bg-surface-container"
+            )}
+          >
+            {TAB_LABELS[dept]}
+          </button>
+        ))}
+      </div>
+
+      {/* Search Input */}
       <div className="relative mb-6">
-        <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400" />
+        <Icon name="search" className="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]" />
         <input
           type="text"
-          placeholder="搜索工具或 Owner..."
+          placeholder="Search tools or owner..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full pl-10 pr-4 py-2.5 border border-neutral-300 rounded-lg text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary bg-white"
+          className="w-full pl-10 pr-4 py-2.5 border border-outline-variant rounded-lg text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary bg-surface-container-lowest"
         />
       </div>
 
-      {!hasResults ? (
-        <div className="flex flex-col items-center py-16 text-center">
-          <span className="text-5xl mb-4">🔧</span>
-          <p className="text-lg font-semibold text-neutral-700 mb-1">未找到相关工具</p>
-          <p className="text-sm text-neutral-500">
-            找不到 &ldquo;{search}&rdquo;？可能还未录入。
-            <br />
-            请联系 IT 团队添加：<a href="mailto:it@company.com" className="text-primary">it@company.com</a>
-          </p>
-        </div>
-      ) : (
-        <div className="space-y-8">
-          {DEPARTMENTS.map((dept) => {
-            const tools = grouped[dept];
-            if (tools.length === 0) return null;
-            return (
-              <section key={dept}>
-                <h2 className="text-base font-semibold text-neutral-700 mb-3 flex items-center gap-2">
-                  <span className={cn(
-                    "inline-block w-2 h-2 rounded-full",
-                    dept === "ALL" ? "bg-gray-400" :
-                    dept === "PEOPLE" ? "bg-purple-400" :
-                    dept === "FINANCE" ? "bg-green-400" :
-                    dept === "GTM" ? "bg-orange-400" :
-                    dept === "ENGINEERING" ? "bg-blue-400" :
-                    "bg-zinc-400"
-                  )} />
-                  {DEPT_LABELS[dept]} 工具
-                </h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {tools.map((tool) => (
-                    <ToolCard key={tool.id} tool={tool} />
-                  ))}
-                </div>
-              </section>
-            );
-          })}
-        </div>
-      )}
+      <div id="tools-tabpanel" role="tabpanel" aria-labelledby={`tab-${activeTab}`}>
+        {!hasResults ? (
+          <div className="flex flex-col items-center py-16 text-center">
+            <span className="text-5xl mb-4">🔧</span>
+            <p className="text-lg font-semibold text-on-surface mb-1">No tools found</p>
+            <p className="text-sm text-on-surface-variant">
+              {search
+                ? <>Can&apos;t find &ldquo;{search}&rdquo;? It may not be listed yet.</>
+                : <>No tools found in this category yet.</>}
+              <br />
+              Contact IT to add it:{" "}
+              <a href="mailto:it@company.com" className="text-primary hover:underline">
+                it@company.com
+              </a>
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {filtered.map((tool) => (
+              <ToolCard key={tool.id} tool={tool} />
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
