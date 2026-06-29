@@ -2,10 +2,15 @@ import type { Announcement } from '@prisma/client'
 
 const SLACK_BOT_TOKEN = process.env.SLACK_BOT_TOKEN
 
+interface SlackTextObject {
+  type: string
+  text: string
+}
+
 interface SlackBlock {
   type: string
-  text?: { type: string; text: string }
-  elements?: Array<{ type: string; text: string; url?: string }>
+  text?: SlackTextObject
+  elements?: Array<{ type: string; text: SlackTextObject; url?: string }>
 }
 
 function buildAnnouncementBlocks(
