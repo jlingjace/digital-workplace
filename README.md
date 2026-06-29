@@ -2,6 +2,8 @@
 
 Next.js 14 (App Router) backend for the internal Digital Workplace portal.
 
+> 📄 **产品需求文档**：见 [`docs/PRD.md`](./docs/PRD.md)（v0.2，含按代码实现状态校准的功能对照与差距分析）。原始 v0.1 设计稿版存档于 [`docs/Digital_Workplace_PRD_v0.1.docx`](./docs/Digital_Workplace_PRD_v0.1.docx)。
+
 ## Tech Stack
 
 | Layer | Choice |
