@@ -5,7 +5,7 @@ import { prisma } from '@/lib/prisma'
 import { requireAdmin } from '@/lib/admin-auth'
 import { AnnouncementStatus } from '@prisma/client'
 
-const ARCHIVABLE_STATUSES = new Set([
+const ARCHIVABLE_STATUSES = new Set<AnnouncementStatus>([
   AnnouncementStatus.PUBLISHED,
   AnnouncementStatus.EXPIRED,
 ])
