@@ -39,14 +39,15 @@ model Session {
 }
 
 model User {
-  id              String          @id @default(cuid())
-  name            String?
-  email           String?         @unique
-  emailVerified   DateTime?
-  image           String?
-  accounts        Account[]
-  sessions        Session[]
-  accessRequests  AccessRequest[]
+  id                String             @id @default(cuid())
+  name              String?
+  email             String?            @unique
+  emailVerified     DateTime?
+  image             String?
+  accounts          Account[]
+  sessions          Session[]
+  accessRequests    AccessRequest[]
+  announcementReads AnnouncementRead[]
 }
 
 model VerificationToken {
@@ -69,28 +70,60 @@ enum Department {
 
 enum AnnouncementStatus {
   DRAFT
+  PENDING_APPROVAL
   PUBLISHED
   ARCHIVED
+  EXPIRED
 }
 
 model Announcement {
-  id            String             @id @default(cuid())
-  title         String
-  content       String             @db.Text
-  department    Department
-  authorName    String
-  authorContact String?
-  publishedAt   DateTime           @default(now())
-  expiresAt     DateTime?
-  isPinned      Boolean            @default(false)
-  attachmentUrl String?
-  status        AnnouncementStatus @default(DRAFT)
-  createdAt     DateTime           @default(now())
-  updatedAt     DateTime           @updatedAt
+  id               String             @id @default(cuid())
+  title            String
+  content          String             @db.Text
+  department       Department
+  authorName       String
+  authorContact    String?
+  publishedAt      DateTime           @default(now())
+  expiresAt        DateTime?
+  isPinned         Boolean            @default(false)
+  attachmentUrl    String?
+  status           AnnouncementStatus @default(DRAFT)
+  isMandatory      Boolean            @default(false)
+  slackChannelId   String?
+  submittedAt      DateTime?
+  approvedByEmail  String?
+  approvedAt       DateTime?
+  rejectionReason  String?            @db.Text
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+
+  readReceipts     AnnouncementRead[]
 
   @@index([department])
   @@index([status])
   @@index([publishedAt])
+  @@index([expiresAt])
+}
+
+model AnnouncementRead {
+  id             String       @id @default(cuid())
+  announcementId String
+  announcement   Announcement @relation(fields: [announcementId], references: [id], onDelete: Cascade)
+  userId         String
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  readAt         DateTime     @default(now())
+
+  @@unique([announcementId, userId])
+  @@index([announcementId])
+  @@index([userId])
+}
+
+model ApprovalConfig {
+  id             String     @id @default(cuid())
+  department     Department @unique
+  approverEmails String[]
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
 }
 
 model Tool {
@@ -117,20 +150,20 @@ enum RequestStatus {
 }
 
 model SystemEntry {
-  id            String          @id @default(cuid())
-  name          String
-  description   String?         @db.Text
-  url           String
-  iconUrl       String?
-  category      String
-  status        String          @default("active")
-  ownerName     String
-  ownerEmail    String?
-  ownerSlack    String?
-  isQuickAccess Boolean         @default(false)
-  deletedAt     DateTime?
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
+  id             String          @id @default(cuid())
+  name           String
+  description    String?         @db.Text
+  url            String
+  iconUrl        String?
+  category       String
+  status         String          @default("active")
+  ownerName      String
+  ownerEmail     String?
+  ownerSlack     String?
+  isQuickAccess  Boolean         @default(false)
+  deletedAt      DateTime?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
   accessRequests AccessRequest[]
 
   @@index([category])
